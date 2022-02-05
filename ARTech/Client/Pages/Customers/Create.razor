@@ -1,0 +1,96 @@
+﻿@page  "/customers/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title"> Create New Customer</h3>
+<hr />
+<br />
+
+<!---
+<EditForm Model="@customer" OnValidSubmit="CreateCustomer">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Vehicle: </label>
+        <div>
+            <InputSelect @bind-Value="customer.VehicleId" class="form-control">
+                <option value="">-- Select Vehicle --</option>
+                @if (Vehicles != null)
+                {
+                    foreach (var vehicle in Vehicles)
+                    {
+                        <option value="@vehicle.Id">
+                            @vehicle.Customer.Name @vehicle.Model.Name - @vehicle.LicensePlateNumber
+                        </option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => customer.VehicleId)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Customer: </label>
+        <div>
+            <InputSelect @bind-Value="customer.CustomerId" class="form-control">
+                <option value="">-- Select Customer --</option>
+                @if (Customers != null)
+                {
+                    foreach (var customer in Customers)
+                    {
+                        <option value="@customer.Id">
+                            @customer.FirstName - @customer.DrivingLicense
+                        </option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => customer.CustomerId)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Date Out: </label>
+        <div>
+            <InputDate @bind-Value="@customer.DateOut" class="form-control" />
+                <ValidationMessage For="@(() => customer.DateOut)" />
+        </div>
+    </div>
+
+    @if (customer.Id > 0)
+    {
+        <div class="form-group">
+            <label>Date In: </label>
+            <div>
+                <InputDate @bind-Value="@customer.DateIn" class="form-control" />
+                <ValidationMessage For="@(() => customer.DateIn)" />
+            </div>
+        </div>
+    }
+
+    <br />
+    <button type="submit" class="btn btn-success btn-block">
+        Create Customer
+    </button>
+</EditForm>-->
+
+<FormComponent ButtonText="Create Customer" customer="customer" OnValidSubmit="@CreateCustomer" />
+
+@code {
+    Customer customer = new Customer();
+
+    //private IList<Vehicle> Vehicles;
+    private IList<Customer> Customers;
+
+    protected async override Task OnInitializedAsync()
+    {
+        //Vehicles = await _client.GetFromJsonAsync<List<Vehicle>>($"{Endpoints.VehiclesEndpoint}");
+        Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
+    }
+
+    private async Task CreateCustomer()
+    {
+        await _client.PostAsJsonAsync(Endpoints.CustomersEndpoint, customer);
+        _navManager.NavigateTo("/customers/");
+    }
+}
