@@ -1,0 +1,81 @@
+﻿@page "/orders/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3 class="card-title">Orders</h3>
+
+<a href="/orders/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Order
+</a>
+<br />
+<br />
+
+@if (Orders == null)
+{
+    <div class="alert alert-info">Loading Orders...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Order Id</th>
+                <th>Customer Id</th>
+                <th>Date</th>
+                <th>Logistic Id</th>
+                <th>Shipping Address</th>
+                <th>Staff Id</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Orders)
+            {
+            <tr>
+                <td>@order.OrderId</td>
+                <td>@order.Customer.CustomerId</td>
+                <td>@order.DateTime.Date.ToString("dd MMMM yyyy")</td>
+                @*<td>@(order.DateIn != nullDT ? (order.DateIn - order.DateOut).TotalDays?.ToString() : "To Be Determined")</td>*@
+                <td>@order.Logistic.LogisticId</td>
+                <td>@order.ShippingAddress</td>
+                <td>@order.Staff.StaffId</td>
+                <td>
+                    <a href="/orders/view/@order.OrderId" class="btn btn-primary">
+                        <span class="oi oi-book"></span>
+                    </a>
+                    <a href="/orders/edit/@order.OrderId" class="btn btn-warning">
+                        <span class="oi oi-pencil"></span>
+                    </a>
+                    <button class="btn btn-danger" @onclick="@(()=>Delete(order.OrderId))">
+                        <span class="oi oi-delete"></span>
+                    </button>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Order> Orders;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Orders = await _client.GetFromJsonAsync<List<Order>>($"{Endpoints.OrdersEndpoint}");
+    }
+
+    async Task Delete(int orderId)
+    {
+        var order = Orders.First(q => q.OrderId == orderId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {order.OrderId}?");
+        if (confirm)
+
+        {
+            await _client.DeleteAsync($"{Endpoints.OrdersEndpoint}/{orderId}");
+            await OnInitializedAsync();
+        }
+    }
+
+}

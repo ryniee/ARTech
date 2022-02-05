@@ -1,0 +1,76 @@
+﻿@page "/logistics/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+
+<h3 class="card-title">Logistics</h3>
+
+<a href="/logistics/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Logistic
+</a>
+<br />
+<br />
+
+@if (Logistics == null)
+{
+    <div class="alert alert-info">Loading Logistics...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Logistic Id</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var logistic in Logistics)
+            {
+            <tr>
+                <td>@logistic.LogisticId</td>
+                <td>@logistic.Name</td>
+                <td>@logistic.Address</td>
+                <td>@logistic.Contact</td>
+                <td>
+                    <a href="/logistics/view/@logistic.LogisticId" class="btn btn-primary">
+                        <span class="oi oi-book"></span>
+                    </a>
+                    <a href="/logistics/edit/@logistic.LogisticId" class="btn btn-warning">
+                        <span class="oi oi-pencil"></span>
+                    </a>
+                    <button class="btn btn-danger" @onclick="@(()=>Delete(logistic.LogisticId))">
+                        <span class="oi oi-delete"></span>
+                    </button>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Logistic> Logistics;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Logistics = await _client.GetFromJsonAsync<List<Logistic>>($"{Endpoints.LogisticsEndpoint}");
+    }
+
+    async Task Delete(int logisticId)
+    {
+        var logistic = Logistics.First(q => q.LogisticId == logisticId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {logistic.LogisticId}?");
+        if (confirm)
+
+        {
+            await _client.DeleteAsync($"{Endpoints.LogisticsEndpoint}/{logisticId}");
+            await OnInitializedAsync();
+        }
+    }
+
+}

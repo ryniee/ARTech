@@ -1,0 +1,74 @@
+﻿@page "/payments/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+
+<h3 class="card-title">Payments</h3>
+
+<a href="/payments/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Payment
+</a>
+<br />
+<br />
+
+@if (Payments == null)
+{
+    <div class = "alert alert-info"> Loading Payments...</div>
+}
+else
+{
+    <table class = "table table-responsive">
+        <thead>
+            <tr>
+                <th>Payment Id</th>
+                <th>Payment Method</th>
+                <th>Order Id</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var payment in Payments)
+            {
+                <tr>
+                    <td>@payment.PaymentId</td>
+                    <td>@payment.PayMeth</td>
+                    <td>@payment.OrderId</td>
+
+                    <td>
+                        <a href="/orderitems/view/@payment.PaymentId" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/orderitems/edit/@payment.PaymentId" class="btn btn-warning">
+                        <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(payment.PaymentId))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+    </table>
+}
+
+@code {
+    private List<Payment> Payments;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Payments = await _client.GetFromJsonAsync<List<Payment>>($"{Endpoints.PaymentsEndpoint}");
+    }
+    async Task Delete(int PaymentId)
+    {
+        var payment = Payments.First(q => q.PaymentId == PaymentId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {payment.PaymentId}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.PaymentsEndpoint}/{PaymentId}");
+            await OnInitializedAsync();
+        }
+    }
+
+}

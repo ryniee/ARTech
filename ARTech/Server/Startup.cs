@@ -1,5 +1,7 @@
 using ARTech.Server.Data;
+using ARTech.Server.IRepository;
 using ARTech.Server.Models;
+using ARTech.Server.Repository;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
+
 
 namespace ARTech.Server
 {
@@ -40,6 +43,8 @@ namespace ARTech.Server
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
