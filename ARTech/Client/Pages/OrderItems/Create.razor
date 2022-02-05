@@ -1,5 +1,33 @@
-﻿<h3>Create</h3>
+﻿@page "/orderItem/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+
+
+<h3 class= "card-title">Create New Order Items</h3>
+<hr	 />
+<br />
+
+<EditForm Model="@orderItem" OnValidSubmit="CreateOrderItem">
+ <DataAnnotationsValidator />
+ <ValidationSummary />
+</EditForm>
 
 @code {
+	OrderItem orderItem = new OrderItem();
 
+	private IList<Product> Products;
+	private IList<Order> Orders;
+
+	protected async override Task OnInitializedAsync()
+	{
+		Products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}");
+		Orders = await _client.GetFromJsonAsync<List<Order>>($"{Endpoints.OrdersEndpoint}");
+	}
+
+	private async Task CreateOrderItem()
+	{
+		await _client.PostAsJsonAsync(Endpoints.OrderItemsEndpoint, orderItem);
+		_navManager.NavigateTo("/orderitems/");
+	}
 }
