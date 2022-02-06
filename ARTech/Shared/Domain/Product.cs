@@ -11,7 +11,7 @@ namespace ARTech.Shared.Domain
         public int ProductId { get; set; }
         public int CustomerId { get; set; }
         public virtual Customer Customer { get; set; }
-        public char Price { get; set; }
+        public int Price { get; set; }
         public int Warranty { get; set; }
         public int Qty { get; set; }
         public string Specs { get; set; }

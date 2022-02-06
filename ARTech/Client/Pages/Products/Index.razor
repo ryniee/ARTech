@@ -1,4 +1,4 @@
-﻿@*@page "/products/"
+﻿@page "/products/"
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
@@ -15,62 +15,72 @@
 
 @if (Products == null)
 {
-    <div class = "alert alert-info"> Loading Products...</div>
+<div class="alert alert-info"> Loading Products...</div>
 }
 else
 {
-    <table class = "table table-responsive">
-        <thead>
-            <tr>
-                <th>Order Item Id</th>
-                <th>Order Quantity</th>
-                <th>Order Id</th>
-                <th>Product Id</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var orderitem in OrderItems)
-            {
-                <tr>
-                    <td>@orderitem.OrderItemId</td>
-                    <td>@orderitem.OrderQty</td>
-                    <td>@orderitem.Product.ProductId</td>
+<table class="table table-responsive">
+    <thead>
+        <tr>
+            <th>Product Id</th>
+            <th>Customer Id</th>
+            <th>Price</th>
+            <th>Warranty</th>
+            <th>Quantity</th>
+            <th>Specification</th>
+            <th>Model</th>
+            <th>Brand</th>
+            <th>Condition</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Products)
+        {
+        <tr>
+            <td>@product.ProductId</td>
+            <td>@product.Customer.CustomerId</td>
+            <td>@product.Price</td>
+            <td>@product.Warranty</td>
+            <td>@product.Qty</td>
+            <td>@product.Specs</td>
+            <td>@product.Model</td>
+            <td>@product.Brand</td>
+            <td>@product.Condition</td>
 
-                    <td>
-                        <a href="/orderitems/view/@orderitem.OrderItemId" class="btn btn-primary">
-                            <span class="oi oi-book"></span>
-                        </a>
-                        <a href="/orderitems/edit/@orderitem.OrderItemId" class="btn btn-warning">
-                        <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="@(()=>Delete(orderitem.OrderItemId))">
-                            <span class="oi oi-delete"></span>
-                        </button>
-                    </td>
-                </tr>
-                }
-            </tbody>
-    </table>
+            <td>
+                <a href="/orderitems/view/@product.ProductId" class="btn btn-primary">
+                    <span class="oi oi-book"></span>
+                </a>
+                <a href="/orderitems/edit/@product.ProductId" class="btn btn-warning">
+                    <span class="oi oi-pencil"></span>
+                </a>
+                <button class="btn btn-danger" @onclick="@(()=>Delete(product.ProductId))">
+                    <span class="oi oi-delete"></span>
+                </button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
 }
 
 @code {
-    private List<OrderItem> OrderItems;
+    private List<Product> Products;
 
     protected async override Task OnInitializedAsync()
     {
-        OrderItems = await _client.GetFromJsonAsync<List<OrderItem>>($"{Endpoints.OrderItemsEndpoint}");
+        Products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}");
     }
-    async Task Delete(int OrderItemId)
+    async Task Delete(int ProductId)
     {
-        var orderitem = OrderItems.First(q => q.OrderItemId == OrderItemId);
-        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {orderitem.OrderItemId}?");
+        var product = Products.First(q => q.ProductId == ProductId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {product.ProductId}?");
         if (confirm)
         {
-            await _client.DeleteAsync($"{Endpoints.OrderItemsEndpoint}/{OrderItemId}");
+            await _client.DeleteAsync($"{Endpoints.ProductsEndpoint}/{ProductId}");
             await OnInitializedAsync();
         }
     }
 
 }
-*@

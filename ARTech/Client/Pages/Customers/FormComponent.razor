@@ -1,4 +1,6 @@
-﻿<EditForm Model="@customer" OnValidSubmit="OnValidSubmit">
+﻿
+@inject HttpClient _client
+<EditForm Model="@customer" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <fieldset disabled="@Disabled">
@@ -53,11 +55,11 @@
         </div>
     </fieldset>
 
-    @if ( !Disabled)
+    @if (!Disabled)
     {
-    <button type="submit" class="btn btn-success btn-block">
-        @ButtonText
-    </button>
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
     }
     <BackToList Target="customers" />
 </EditForm>

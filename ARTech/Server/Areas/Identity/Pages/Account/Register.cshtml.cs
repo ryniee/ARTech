@@ -30,7 +30,7 @@ namespace ARTech.Server.Areas.Identity.Pages.Account
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender,
+            IEmailSender emailSender, 
             RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
@@ -57,7 +57,6 @@ namespace ARTech.Server.Areas.Identity.Pages.Account
             [Required]
             [Display(Name = "First Name")]
             public string FirstName { get; set; }
-
             [Required]
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
@@ -86,8 +85,7 @@ namespace ARTech.Server.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email,
-                    FirstName = Input.FirstName, LastName = Input.LastName};
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName, LastName = Input.LastName };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

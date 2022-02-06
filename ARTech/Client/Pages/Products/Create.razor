@@ -4,28 +4,81 @@
 
 
 
-<h3 class= "card-title">Create New Product</h3>
-<hr	 />
+<h3 class="card-title">Create New Product</h3>
+<hr />
 <br />
 
-<EditForm Model="@product" OnValidSubmit="CreateProduct">
- <DataAnnotationsValidator />
- <ValidationSummary />
-</EditForm>
+<!--<EditForm Model="@product" OnValidSubmit="CreateProduct">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class=" form-group">
+        <label>Price: </label>
+        <div>
+            <InputNumber @bind-Value="@product.Price" class="form-control" />
+            <ValidationMessage For="@(() => product.Price)" />
+        </div>
+    </div>
+
+    <div class=" form-group">
+        <label>Warranty: </label>
+        <div>
+            <InputNumber @bind-Value="@product.Warranty" class="form-control" />
+            <ValidationMessage For="@(() => product.Warranty)" />
+        </div>
+    </div>
+    <div class=" form-group">
+        <label>Quantity: </label>
+        <div>
+            <InputNumber @bind-Value="@product.Qty" class="form-control" />
+            <ValidationMessage For="@(() => product.Qty)" />
+        </div>
+    </div>
+    <div class=" form-group">
+        <label>Specs: </label>
+        <div>
+            <InputText @bind-Value="@product.Specs" class="form-control" />
+            <ValidationMessage For="@(() => product.Specs)" />
+        </div>
+    </div>
+    <div class=" form-group">
+        <label>Model: </label>
+        <div>
+            <InputText @bind-Value="@product.Model" class="form-control" />
+            <ValidationMessage For="@(() => product.Model)" />
+        </div>
+    </div>
+    <div class=" form-group">
+        <label>Brand: </label>
+        <div>
+            <InputText @bind-Value="@product.Brand" class="form-control" />
+            <ValidationMessage For="@(() => product.Model)" />
+        </div>
+    </div>
+    <div class=" form-group">
+        <label>Condition: </label>
+        <div>
+            <InputText @bind-Value="@product.Condition" class="form-control" />
+            <ValidationMessage For="@(() => product.Condition)" />
+        </div>
+    </div>
+
+</EditForm>-->
+
+<FormComponent ButtonText="Create Products" product="product" OnValidSubmit="@CreateProduct" />
 
 @code {
-	Product product = new Product();
+    Product product = new Product();
 
-	private IList<Customer> Customers;
+    private IList<Product> Products;
 
-	protected async override Task OnInitializedAsync()
-	{
-		Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
-	}
+    protected async override Task OnInitializedAsync()
+    {
+        Products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}");
+    }
 
-	private async Task CreateProduct()
-	{
-		await _client.PostAsJsonAsync(Endpoints.ProductsEndpoint, product);
-		_navManager.NavigateTo("/products/");
-	}
+    private async Task CreateProduct()
+    {
+        await _client.PostAsJsonAsync(Endpoints.ProductsEndpoint, product);
+        _navManager.NavigateTo("/products/");
+    }
 }
