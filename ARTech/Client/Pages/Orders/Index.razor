@@ -3,6 +3,7 @@
 @inject IJSRuntime js
 @attribute [Authorize]
 
+
 <h3 class="card-title">Orders</h3>
 
 <a href="/orders/create" class="btn btn-secondary">
@@ -23,11 +24,10 @@ else
             <tr>
                 <th>Order Id</th>
                 <th>Customer Id</th>
-                <th>Date</th>
+                <th>DateTime</th>
                 <th>Logistic Id</th>
                 <th>Shipping Address</th>
                 <th>Staff Id</th>
-                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -35,12 +35,11 @@ else
             {
             <tr>
                 <td>@order.OrderId</td>
-                <td>@order.Customer.CustomerId</td>
-                <td>@order.DateTime.Date.ToString("dd MMMM yyyy")</td>
-                @*<td>@(order.DateIn != nullDT ? (order.DateIn - order.DateOut).TotalDays?.ToString() : "To Be Determined")</td>*@
-                <td>@order.Logistic.LogisticId</td>
+                <td>@order.CustomerId</td>
+                <td>@order.DateTime</td>
+                <td>@order.LogisticId</td>
                 <td>@order.ShippingAddress</td>
-                <td>@order.Staff.StaffId</td>
+                <td>@order.StaffId</td>
                 <td>
                     <a href="/orders/view/@order.OrderId" class="btn btn-primary">
                         <span class="oi oi-book"></span>

@@ -1,6 +1,6 @@
 ﻿@inject HttpClient _client
 
-<EditForm Model="@booking" OnValidSubmit="OnValidSubmit">
+<!--<EditForm Model="@booking" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <fieldset disabled="@Disabled">
@@ -71,7 +71,7 @@
     <BackToList Target="bookings" />
 </EditForm>
 
-@code {
+code {
     [Parameter] public bool Disabled { get; set; } = false;
     [Parameter] public Booking booking { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
@@ -85,4 +85,4 @@
         Vehicles = await _client.GetFromJsonAsync<List<Vehicle>>($"{Endpoints.VehiclesEndpoint}");
         Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
     }
-}
+}-->

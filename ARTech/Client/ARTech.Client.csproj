@@ -6,6 +6,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="Pages\OrderItems\Create.razor" />
+    <None Include="Pages\OrderItems\Edit.razor" />
+    <None Include="Pages\OrderItems\FormComponent.razor" />
+    <None Include="Pages\OrderItems\Index.razor" />
+    <None Include="Pages\OrderItems\View.razor" />
+    <None Include="Pages\Payments\Create.razor" />
+    <None Include="Pages\Payments\Edit.razor" />
+    <None Include="Pages\Payments\FormComponent.razor" />
+    <None Include="Pages\Payments\Index.razor" />
+    <None Include="Pages\Payments\View.razor" />
+    <None Include="Pages\Products\Create.razor" />
+    <None Include="Pages\Products\Edit.razor" />
+    <None Include="Pages\Products\FormComponent.razor" />
+    <None Include="Pages\Products\Index.razor" />
+    <None Include="Pages\Products\View.razor" />
+    <None Include="Pages\Staffs\Create.razor" />
+    <None Include="Pages\Staffs\Edit.razor" />
+    <None Include="Pages\Staffs\FormComponent.razor" />
+    <None Include="Pages\Staffs\Index.razor" />
+    <None Include="Pages\Staffs\View.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.12" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="5.0.12" />

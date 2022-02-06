@@ -1,39 +1,39 @@
-﻿@page  "/bookings/create/"
+﻿@page  "/logistics/create/"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
-<h3 class="card-title"> Create New Booking</h3>
+<h3 class="card-title"> Create New Logistic</h3>
 <hr />
 <br />
 
 <!---
-<EditForm Model="@booking" OnValidSubmit="CreateBooking">
+<EditForm Model="@logistic" OnValidSubmit="CreateLogistic">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
     <div class="form-group">
         <label>Vehicle: </label>
         <div>
-            <InputSelect @bind-Value="booking.VehicleId" class="form-control">
+            <InputSelect @bind-Value="logistic.VehicleId" class="form-control">
                 <option value="">-- Select Vehicle --</option>
                 @if (Vehicles != null)
                 {
                     foreach (var vehicle in Vehicles)
                     {
                         <option value="@vehicle.Id">
-                            @vehicle.Booking.Name @vehicle.Model.Name - @vehicle.LicensePlateNumber
+                            @vehicle.Logistic.Name @vehicle.Model.Name - @vehicle.LicensePlateNumber
                         </option>
                     }
                 }
             </InputSelect>
-            <ValidationMessage For="@(() => booking.VehicleId)" />
+            <ValidationMessage For="@(() => logistic.VehicleId)" />
         </div>
     </div>
 
     <div class="form-group">
         <label>Customer: </label>
         <div>
-            <InputSelect @bind-Value="booking.CustomerId" class="form-control">
+            <InputSelect @bind-Value="logistic.CustomerId" class="form-control">
                 <option value="">-- Select Customer --</option>
                 @if (Customers != null)
                 {
@@ -45,52 +45,52 @@
                     }
                 }
             </InputSelect>
-            <ValidationMessage For="@(() => booking.CustomerId)" />
+            <ValidationMessage For="@(() => logistic.CustomerId)" />
         </div>
     </div>
 
     <div class="form-group">
         <label>Date Out: </label>
         <div>
-            <InputDate @bind-Value="@booking.DateOut" class="form-control" />
-                <ValidationMessage For="@(() => booking.DateOut)" />
+            <InputDate @bind-Value="@logistic.DateOut" class="form-control" />
+                <ValidationMessage For="@(() => logistic.DateOut)" />
         </div>
     </div>
 
-    @if (booking.Id > 0)
+    @if (logistic.Id > 0)
     {
         <div class="form-group">
             <label>Date In: </label>
             <div>
-                <InputDate @bind-Value="@booking.DateIn" class="form-control" />
-                <ValidationMessage For="@(() => booking.DateIn)" />
+                <InputDate @bind-Value="@logistic.DateIn" class="form-control" />
+                <ValidationMessage For="@(() => logistic.DateIn)" />
             </div>
         </div>
     }
 
     <br />
     <button type="submit" class="btn btn-success btn-block">
-        Create Booking
+        Create Logistic
     </button>
 </EditForm>-->
 
-<FormComponent ButtonText="Create Booking" booking="booking" OnValidSubmit="@CreateBooking" />
+<FormComponent ButtonText="Create Logistic" logistic="logistic" OnValidSubmit="@CreateLogistic" />
 
 @code {
-    Booking booking = new Booking();
+    Logistic logistic = new Logistic();
 
-    private IList<Vehicle> Vehicles;
+    //private IList<Vehicle> Vehicles;
     private IList<Customer> Customers;
 
     protected async override Task OnInitializedAsync()
     {
-        Vehicles = await _client.GetFromJsonAsync<List<Vehicle>>($"{Endpoints.VehiclesEndpoint}");
+        //Vehicles = await _client.GetFromJsonAsync<List<Vehicle>>($"{Endpoints.VehiclesEndpoint}");
         Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
     }
 
-    private async Task CreateBooking()
+    private async Task CreateLogistic()
     {
-        await _client.PostAsJsonAsync(Endpoints.BookingsEndpoint, booking);
-        _navManager.NavigateTo("/bookings/");
+        await _client.PostAsJsonAsync(Endpoints.LogisticsEndpoint, logistic);
+        _navManager.NavigateTo("/logistics/");
     }
 }

@@ -1,23 +1,23 @@
-﻿@page "/bookings/edit/{id:int}"
+﻿@page "/logistics/edit/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
-<h3>Edit Booking</h3>
+<h3>Edit Logistic</h3>
 
-<FormComponent ButtonText="Update" OnValidSubmit="EditBooking" booking="booking" />
+<FormComponent ButtonText="Update" OnValidSubmit="EditLogistic" logistic="logistic" />
 
 @code {
     [Parameter] public int id { get; set; }
-    Booking booking = new Booking();
+    Logistic logistic = new Logistic();
 
     protected async override Task OnParametersSetAsync()
     {
-        booking = await _client.GetFromJsonAsync<Booking>($"{Endpoints.BookingsEndpoint}/{id}");
+        logistic = await _client.GetFromJsonAsync<Logistic>($"{Endpoints.LogisticsEndpoint}/{id}");
     }
 
-    async Task EditBooking()
+    async Task EditLogistic()
     {
-        await _client.PutAsJsonAsync($"{Endpoints.BookingsEndpoint}/{id}", booking);
-        _navManager.NavigateTo("/bookings/");
+        await _client.PutAsJsonAsync($"{Endpoints.LogisticsEndpoint}/{id}", logistic);
+        _navManager.NavigateTo("/logistics/");
         }
 }
