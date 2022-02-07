@@ -1,12 +1,30 @@
-﻿<EditForm Model="@orderitem" OnValidSubmit="OnValidSubmit">
+﻿@inject HttpClient _client
+
+
+<EditForm Model="@orderItem" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <fieldset disabled="@Disabled">
+
+        <div class=" form-group">
+            <label>Order Item: </label>
+            <div>
+                <InputSelect @bind-Value="@orderItem.OrderSummaryId" class="form-control" />
+                <option value= "">-- Select Order Id --</option>
+                @if (OrderSummarys != null){
+                    foreach(var order in OrderSummarys)
+                    {
+                        <option value ="@order.OrderSummaryId"> @order.CustomerId </option>
+                    }
+                }
+                <ValidationMessage For="@(() => orderItem.OrderSummaryId)" />
+            </div>
+        </div>
         <div class=" form-group">
             <label>Quantity: </label>
             <div>
-                <InputNumber @bind-Value="@orderitem.OrderQty" class="form-control" />
-                <ValidationMessage For="@(() => orderitem.OrderQty)" />
+                <InputNumber @bind-Value="@orderItem.OrderQty" class="form-control" />
+                <ValidationMessage For="@(() => orderItem.OrderQty)" />
             </div>
         </div>
 
@@ -23,8 +41,14 @@
 
 @code {
     [Parameter] public bool Disabled { get; set; } = false;
-    [Parameter] public OrderItem orderitem { get; set; }
+    [Parameter] public OrderItem orderItem { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
 
+    private IList<OrderSummary> OrderSummarys;
+
+    protected async override Task OnInitializedAsync()
+    {
+        OrderSummarys = await _client.GetFromJsonAsync<List<OrderSummary>>($"{Endpoints.OrderSummarysEndpoint}");
+    }
 }
