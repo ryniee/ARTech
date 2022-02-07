@@ -36,7 +36,7 @@ else
             <tr>
                 <td>@ordersummary.OrderSummaryId</td>
                 <td>@ordersummary.CustomerId</td>
-                <td>@ordersummary.DateTime</td>
+                <td>@ordersummary.DateTime != nullDT ? (ordersummary.DateIn - booking.DateOut).TotalDays.ToString() : "To Be Determined")</td>
                 <td>@ordersummary.LogisticId</td>
                 <td>@ordersummary.ShippingAddress</td>
                 <td>@ordersummary.StaffId</td>

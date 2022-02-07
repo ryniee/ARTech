@@ -26,7 +26,7 @@ namespace ARTech.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetOrderSummarys()
         {
-            var logistics = await _unitOfWork.OrderSummarys.GetAll();
+            var logistics = await _unitOfWork.OrderSummarys.GetAll(includes: q => q.Include(x => x.Customer).Include(x => x.Logistic).Include(x => x.Staff));
             return Ok(logistics);
         }
 

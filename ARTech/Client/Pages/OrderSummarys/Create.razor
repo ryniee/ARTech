@@ -11,6 +11,17 @@
 @code {
     OrderSummary ordersummary = new OrderSummary();
 
+    private IList<Customer> Customers;
+    private IList<Logistic> Logistics;
+    private IList<Staff> Staffs;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
+        Logistics = await _client.GetFromJsonAsync<List<Logistic>>($"{Endpoints.LogisticsEndpoint}");
+        Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
+    }
+
     private async Task CreateOrderSummary()
     {
         await _client.PostAsJsonAsync(Endpoints.OrderSummarysEndpoint, ordersummary);
