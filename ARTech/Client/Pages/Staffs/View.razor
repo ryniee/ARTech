@@ -2,17 +2,17 @@
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
-<!--<h3>View</h3>
+<h3>View</h3>
 
-<FormComponent booking="booking" Disabled="true" />
+<FormComponent staff="staff" Disabled="true" />
 
-code {
+@code {
     [Parameter] public int id { get; set; }
-    Booking booking = new Booking();
+    Staff staff = new Staff();
 
     protected async override Task OnParametersSetAsync()
     {
-        booking = await
-       _client.GetFromJsonAsync<Booking>($"{Endpoints.BookingsEndpoint}/{id}");
+        staff = await
+       _client.GetFromJsonAsync<Staff>($"{Endpoints.StaffsEndpoint}/{id}");
     }
-}-->
+}

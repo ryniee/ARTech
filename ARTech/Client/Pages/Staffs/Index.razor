@@ -6,7 +6,7 @@
 
 <h3 class="card-title">Staff</h3>
 
-<a href="/staff/create" class="btn btn-secondary">
+<a href="/staffs/create" class="btn btn-secondary">
     <span class="oi oi-plus"></span>
     Create New Staff
 </a>
@@ -42,10 +42,10 @@ else
                     <td>@staff.Position</td>
 
                     <td>
-                        <a href="/orderitems/view/@staff.StaffId" class="btn btn-primary">
+                        <a href="/staffs/view/@staff.StaffId" class="btn btn-primary">
                             <span class="oi oi-book"></span>
                         </a>
-                        <a href="/orderitems/edit/@staff.StaffId" class="btn btn-warning">
+                        <a href="/staffs/edit/@staff.StaffId" class="btn btn-warning">
                         <span class="oi oi-pencil"></span>
                         </a>
                         <button class="btn btn-danger" @onclick="@(()=>Delete(staff.StaffId))">

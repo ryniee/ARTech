@@ -4,20 +4,20 @@
 
 <h3>Edit Order Item</h3>
 
-<FormComponent ButtonText="Update" OnValidSubmit="EditOrderItem" orderItem="orderItem" />
+<FormComponent ButtonText="Update" OnValidSubmit="EditOrderItem" orderItem="orderitem" />
 
 @code {
     [Parameter] public int id { get; set; }
-    OrderItem orderItem = new OrderItem();
+    OrderItem orderitem = new OrderItem();
 
     protected async override Task OnParametersSetAsync()
     {
-        orderItem = await _client.GetFromJsonAsync<OrderItem>($"{Endpoints.OrderItemsEndpoint}/{id}");
+        orderitem = await _client.GetFromJsonAsync<OrderItem>($"{Endpoints.OrderItemsEndpoint}/{id}");
     }
 
     async Task EditOrderItem()
     {
-        await _client.PutAsJsonAsync($"{Endpoints.OrderItemsEndpoint}/{id}", orderItem);
+        await _client.PutAsJsonAsync($"{Endpoints.OrderItemsEndpoint}/{id}", orderitem);
         _navManager.NavigateTo("/orderitems/");
         }
 }-->
