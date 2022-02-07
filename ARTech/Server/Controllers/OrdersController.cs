@@ -13,48 +13,48 @@ namespace ARTech.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrdersController : ControllerBase
+    public class OrderSummarysController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public OrdersController(IUnitOfWork unitOfWork)
+        public OrderSummarysController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        // GET: api/Orders
+        // GET: api/OrderSummarys
         [HttpGet]
-        public async Task<IActionResult> GetOrders()
+        public async Task<IActionResult> GetOrderSummarys()
         {
-            var logistics = await _unitOfWork.Orders.GetAll();
+            var logistics = await _unitOfWork.OrderSummarys.GetAll();
             return Ok(logistics);
         }
 
-        // GET: api/Orders/5
+        // GET: api/OrderSummarys/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetOrder(int id)
+        public async Task<IActionResult> GetOrderSummary(int id)
         {
-            var order = await _unitOfWork.Orders.Get(q => q.OrderId == id);
+            var ordersummary = await _unitOfWork.OrderSummarys.Get(q => q.OrderSummaryId == id);
 
-            if (order == null)
+            if (ordersummary == null)
             {
                 return NotFound();
             }
 
-            return Ok(order);
+            return Ok(ordersummary);
         }
 
-        // PUT: api/Orders/5
+        // PUT: api/OrderSummarys/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrder(int id, Order order)
+        public async Task<IActionResult> PutOrderSummary(int id, OrderSummary ordersummary)
         {
-            if (id != order.OrderId)
+            if (id != ordersummary.OrderSummaryId)
             {
                 return BadRequest();
             }
 
-            _unitOfWork.Orders.Update(order);
+            _unitOfWork.OrderSummarys.Update(ordersummary);
 
             try
             {
@@ -62,7 +62,7 @@ namespace ARTech.Server.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await OrderExists(id))
+                if (!await OrderSummaryExists(id))
                 {
                     return NotFound();
                 }
@@ -75,37 +75,37 @@ namespace ARTech.Server.Controllers
             return NoContent();
         }
 
-        // POST: api/Orders
+        // POST: api/OrderSummarys
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
+        public async Task<ActionResult<OrderSummary>> PostOrderSummary(OrderSummary ordersummary)
         {
-            await _unitOfWork.Orders.Insert(order);
+            await _unitOfWork.OrderSummarys.Insert(ordersummary);
             await _unitOfWork.Save(HttpContext);
 
-            return CreatedAtAction("GetOrder", new { id = order.OrderId }, order);
+            return CreatedAtAction("GetOrderSummary", new { id = ordersummary.OrderSummaryId }, ordersummary);
         }
 
-        // DELETE: api/Orders/5
+        // DELETE: api/OrderSummarys/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOrder(int id)
+        public async Task<IActionResult> DeleteOrderSummary(int id)
         {
-            var order = await _unitOfWork.Orders.Get(q => q.OrderId == id);
-            if (order == null)
+            var ordersummary = await _unitOfWork.OrderSummarys.Get(q => q.OrderSummaryId == id);
+            if (ordersummary == null)
             {
                 return NotFound();
             }
 
-            await _unitOfWork.Orders.Delete(id);
+            await _unitOfWork.OrderSummarys.Delete(id);
             await _unitOfWork.Save(HttpContext);
 
             return NoContent();
         }
 
-        private async Task<bool> OrderExists(int id)
+        private async Task<bool> OrderSummaryExists(int id)
         {
-            var order = await _unitOfWork.Orders.Get(q => q.OrderId == id);
-            return order != null;
+            var ordersummary = await _unitOfWork.OrderSummarys.Get(q => q.OrderSummaryId == id);
+            return ordersummary != null;
         }
     }
 }

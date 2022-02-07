@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ARTech.Shared.Domain
 {
-    public class Order
+    public class OrderSummary
     {
-        public int OrderId { get; set; }
+        public int OrderSummaryId { get; set; }
         public int CustomerId { get; set; }
         public virtual Customer Customer { get; set; }
         public DateTime DateTime { get; set; }

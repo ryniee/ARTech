@@ -4,15 +4,15 @@
 
 <h3>View</h3>
 
-<FormComponent orderItem="orderItem" Disabled="true" />
+<FormComponent orderitem="orderitem" Disabled="true" />
 
 @code {
     [Parameter] public int id { get; set; }
-    OrderItem orderItem = new OrderItem();
+    OrderItem orderitem = new OrderItem();
 
     protected async override Task OnParametersSetAsync()
     {
-        orderItem = await
+        orderitem = await
        _client.GetFromJsonAsync<OrderItem>($"{Endpoints.OrderItemsEndpoint}/{id}");
     }
 }

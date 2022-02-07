@@ -8,23 +8,23 @@
 <br />
 
 
-<FormComponent ButtonText="Create Order Item" orderItem="orderItem" OnValidSubmit="@CreateOrderItem" />
+<FormComponent ButtonText="Create Order Item" orderitem="orderitem" OnValidSubmit="@CreateOrderItem" />
 
 @code {
-	OrderItem orderItem = new OrderItem();
+	OrderItem orderitem = new OrderItem();
 
 	private IList<Product> Products;
-	private IList<Order> Orders;
+	private IList<OrderSummary> OrderSummarys;
 
 	protected async override Task OnInitializedAsync()
 	{
 		Products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}");
-		Orders = await _client.GetFromJsonAsync<List<Order>>($"{Endpoints.OrdersEndpoint}");
+		OrderSummarys = await _client.GetFromJsonAsync<List<OrderSummary>>($"{Endpoints.OrderSummarysEndpoint}");
 	}
 
 	private async Task CreateOrderItem()
 	{
-		await _client.PostAsJsonAsync(Endpoints.OrderItemsEndpoint, orderItem);
+		await _client.PostAsJsonAsync(Endpoints.OrderItemsEndpoint, orderitem);
 		_navManager.NavigateTo("/orderitems/");
 	}
 }

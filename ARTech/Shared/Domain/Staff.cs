@@ -9,7 +9,7 @@ namespace ARTech.Shared.Domain
     public class Staff
     {
         public int StaffId { get; set; }
-        public string FirstName { get; }
+        public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Contact { get; set; }
         public string Race { get; set; }

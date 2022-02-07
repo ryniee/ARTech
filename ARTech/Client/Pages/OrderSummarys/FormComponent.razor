@@ -1,14 +1,14 @@
 ﻿@inject HttpClient _client
 
-<EditForm Model="@order" OnValidSubmit="OnValidSubmit">
+<EditForm Model="@ordersummary" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <fieldset disabled="@Disabled">
         <div class=" form-group">
             <label>Shipping Address: </label>
             <div>
-                <InputText @bind-Value="@order.ShippingAddress" class="form-control" />
-                <ValidationMessage For="@(() => order.ShippingAddress)" />
+                <InputText @bind-Value="@ordersummary.ShippingAddress" class="form-control" />
+                <ValidationMessage For="@(() => ordersummary.ShippingAddress)" />
             </div>
         </div>
     </fieldset>
@@ -19,12 +19,12 @@
             @ButtonText
         </button>
     }
-    <BackToList Target="orders" />
+    <BackToList Target="ordersummarys" />
 </EditForm>
 
 @code {
     [Parameter] public bool Disabled { get; set; } = false;
-    [Parameter] public Order order { get; set; }
+    [Parameter] public OrderSummary ordersummary { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
 }

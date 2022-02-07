@@ -17,7 +17,7 @@ namespace ARTech.Server.Repository
     {
         private readonly ApplicationDbContext _context;
         private IGenericRepository<Logistic> _logistics;
-        private IGenericRepository<Order> _orders;
+        private IGenericRepository<OrderSummary> _ordersummarys;
         private IGenericRepository<OrderItem> _orderitems;
         private IGenericRepository<Payment> _payments;
         private IGenericRepository<Customer> _customers;
@@ -34,8 +34,8 @@ namespace ARTech.Server.Repository
 
         public IGenericRepository<Logistic> Logistics
             => _logistics ??= new GenericRepository<Logistic>(_context);
-        public IGenericRepository<Order> Orders
-            => _orders ??= new GenericRepository<Order>(_context);
+        public IGenericRepository<OrderSummary> OrderSummarys
+            => _ordersummarys ??= new GenericRepository<OrderSummary>(_context);
         public IGenericRepository<OrderItem> OrderItems
             => _orderitems ??= new GenericRepository<OrderItem>(_context);
         public IGenericRepository<Payment> Payments

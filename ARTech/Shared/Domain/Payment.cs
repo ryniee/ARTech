@@ -11,7 +11,7 @@ namespace ARTech.Shared.Domain
         public int PaymentId { get; set; }
         public string PayMeth { get; set; }
         public DateTime DateTime { get; set; }
-        public int OrderId { get; set; }
-        public virtual Order Order { get; set; }
+        public int OrderSummaryId { get; set; }
+        public virtual OrderSummary OrderSummary { get; set; }
     }
 }

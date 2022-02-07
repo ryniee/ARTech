@@ -11,7 +11,7 @@ namespace ARTech.Server.IRepository
     {
         Task Save(HttpContext httpContext);
         IGenericRepository<Logistic> Logistics { get; }
-        IGenericRepository<Order> Orders { get; }
+        IGenericRepository<OrderSummary> OrderSummarys { get; }
         IGenericRepository<OrderItem> OrderItems { get; }
         IGenericRepository<Payment> Payments { get; }
         IGenericRepository<Product> Products { get; }

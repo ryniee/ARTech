@@ -125,6 +125,7 @@ namespace ARTech.Server.Migrations
                 {
                     StaffId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Contact = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Race = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -268,10 +269,10 @@ namespace ARTech.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
+                name: "OrderSummarys",
                 columns: table => new
                 {
-                    OrderId = table.Column<int>(type: "int", nullable: false)
+                    OrderSummaryId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
                     DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -281,21 +282,21 @@ namespace ARTech.Server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.OrderId);
+                    table.PrimaryKey("PK_OrderSummarys", x => x.OrderSummaryId);
                     table.ForeignKey(
-                        name: "FK_Orders_Customers_CustomerId",
+                        name: "FK_OrderSummarys_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "CustomerId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Orders_Logistics_LogisticId",
+                        name: "FK_OrderSummarys_Logistics_LogisticId",
                         column: x => x.LogisticId,
                         principalTable: "Logistics",
                         principalColumn: "LogisticId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Orders_Staffs_StaffId",
+                        name: "FK_OrderSummarys_Staffs_StaffId",
                         column: x => x.StaffId,
                         principalTable: "Staffs",
                         principalColumn: "StaffId",
@@ -310,16 +311,16 @@ namespace ARTech.Server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderQty = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: true)
+                    OrderSummaryId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OrderItems", x => x.OrderItemId);
                     table.ForeignKey(
-                        name: "FK_OrderItems_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "OrderId",
+                        name: "FK_OrderItems_OrderSummarys_OrderSummaryId",
+                        column: x => x.OrderSummaryId,
+                        principalTable: "OrderSummarys",
+                        principalColumn: "OrderSummaryId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_OrderItems_Products_ProductId",
@@ -337,16 +338,16 @@ namespace ARTech.Server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PayMeth = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: false)
+                    OrderSummaryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Payments", x => x.PaymentId);
                     table.ForeignKey(
-                        name: "FK_Payments_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "OrderId",
+                        name: "FK_Payments_OrderSummarys_OrderSummaryId",
+                        column: x => x.OrderSummaryId,
+                        principalTable: "OrderSummarys",
+                        principalColumn: "OrderSummaryId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -406,9 +407,9 @@ namespace ARTech.Server.Migrations
                 column: "Expiration");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderItems_OrderId",
+                name: "IX_OrderItems_OrderSummaryId",
                 table: "OrderItems",
-                column: "OrderId");
+                column: "OrderSummaryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_ProductId",
@@ -416,24 +417,24 @@ namespace ARTech.Server.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_CustomerId",
-                table: "Orders",
+                name: "IX_OrderSummarys_CustomerId",
+                table: "OrderSummarys",
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_LogisticId",
-                table: "Orders",
+                name: "IX_OrderSummarys_LogisticId",
+                table: "OrderSummarys",
                 column: "LogisticId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_StaffId",
-                table: "Orders",
+                name: "IX_OrderSummarys_StaffId",
+                table: "OrderSummarys",
                 column: "StaffId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payments_OrderId",
+                name: "IX_Payments_OrderSummaryId",
                 table: "Payments",
-                column: "OrderId");
+                column: "OrderSummaryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersistedGrants_Expiration",
@@ -495,7 +496,7 @@ namespace ARTech.Server.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "OrderSummarys");
 
             migrationBuilder.DropTable(
                 name: "Customers");

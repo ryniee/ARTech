@@ -9,7 +9,7 @@ namespace ARTech.Client.Static
     {
         private static readonly string Prefix = "api";
 
-        public static readonly string OrdersEndpoint = $"{Prefix}/orders";
+        public static readonly string OrderSummarysEndpoint = $"{Prefix}/ordersummarys";
         public static readonly string LogisticsEndpoint = $"{Prefix}/logistics";
         public static readonly string OrderItemsEndpoint = $"{Prefix}/orderitems";
         public static readonly string PaymentsEndpoint = $"{Prefix}/payments";

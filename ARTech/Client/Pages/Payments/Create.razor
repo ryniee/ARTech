@@ -16,11 +16,11 @@
 @code {
 	Payment payment = new Payment();
 
-	private IList<Order> Orders;
+	private IList<OrderSummary> OrderSummarys;
 
 	protected async override Task OnInitializedAsync()
 	{
-		Orders = await _client.GetFromJsonAsync<List<Order>>($"{Endpoints.OrdersEndpoint}");
+		OrderSummarys = await _client.GetFromJsonAsync<List<OrderSummary>>($"{Endpoints.OrderSummarysEndpoint}");
 	}
 
 	private async Task CreatePayment()

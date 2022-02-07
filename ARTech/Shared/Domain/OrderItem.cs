@@ -12,7 +12,7 @@ namespace ARTech.Shared.Domain
         public int OrderQty { get; set; }
         public int ProductId { get; set; }
         public virtual Product Product { get; set; }
-        public int? OrderId { get; set; }
-        public virtual Order Order { get; set; }
+        public int? OrderSummaryId { get; set; }
+        public virtual OrderSummary OrderSummary { get; set; }
     }
 }

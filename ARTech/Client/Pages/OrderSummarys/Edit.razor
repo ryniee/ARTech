@@ -1,0 +1,23 @@
+﻿@page "/ordersummarys/edit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>Edit Order Summary</h3>
+
+<FormComponent ButtonText="Update" OnValidSubmit="EditOrderSummary" ordersummary="ordersummary" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    OrderSummary ordersummary = new OrderSummary();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        ordersummary = await _client.GetFromJsonAsync<OrderSummary>($"{Endpoints.OrderSummarysEndpoint}/{id}");
+    }
+
+    async Task EditOrderSummary()
+    {
+        await _client.PutAsJsonAsync($"{Endpoints.OrderSummarysEndpoint}/{id}", ordersummary);
+        _navManager.NavigateTo("/ordersummarys/");
+    }
+}
