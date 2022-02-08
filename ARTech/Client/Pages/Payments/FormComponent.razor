@@ -13,16 +13,8 @@
         <div class=" form-group">
             <label>Payment Method: </label>
             <div>
-                <InputNumber @bind-Value="@payment.PaymentId" class="form-control" />
-                <ValidationMessage For="@(() => payment.PaymentId)" />
-            </div>
-        </div>
-
-        <div class=" form-group">
-            <label>Payment Method: </label>
-            <div>
-                <InputNumber @bind-Value="@payment.PaymentId" class="form-control" />
-                <ValidationMessage For="@(() => payment.PaymentId)" />
+                <InputNumber @bind-Value="@payment.PayMeth" class="form-control" />
+                <ValidationMessage For="@(() => payment.PayMeth)" />
             </div>
         </div>
 

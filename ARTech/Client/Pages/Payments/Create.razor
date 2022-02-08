@@ -8,10 +8,7 @@
 <hr	 />
 <br />
 
-<EditForm Model="@payment" OnValidSubmit="CreatePayment">
- <DataAnnotationsValidator />
- <ValidationSummary />
-</EditForm>
+<FormComponent ButtonText="Create Payment" payment="payment" OnValidSubmit="@CreatePayment" />
 
 @code {
 	Payment payment = new Payment();
