@@ -147,9 +147,34 @@ namespace ARTech.Server.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ARTech.Shared.Domain.Order", b =>
+            modelBuilder.Entity("ARTech.Shared.Domain.OrderItem", b =>
                 {
-                    b.Property<int>("OrderId")
+                    b.Property<int>("OrderItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("OrderQty")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OrderSummaryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderItemId");
+
+                    b.HasIndex("OrderSummaryId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderItems");
+                });
+
+            modelBuilder.Entity("ARTech.Shared.Domain.OrderSummary", b =>
+                {
+                    b.Property<int>("OrderSummaryId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -169,7 +194,7 @@ namespace ARTech.Server.Migrations
                     b.Property<int>("StaffId")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderId");
+                    b.HasKey("OrderSummaryId");
 
                     b.HasIndex("CustomerId");
 
@@ -177,32 +202,7 @@ namespace ARTech.Server.Migrations
 
                     b.HasIndex("StaffId");
 
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("ARTech.Shared.Domain.OrderItem", b =>
-                {
-                    b.Property<int>("OrderItemId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderQty")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("OrderItemId");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderSummarys");
                 });
 
             modelBuilder.Entity("ARTech.Shared.Domain.Payment", b =>
@@ -215,7 +215,7 @@ namespace ARTech.Server.Migrations
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("OrderId")
+                    b.Property<int>("OrderSummaryId")
                         .HasColumnType("int");
 
                     b.Property<string>("PayMeth")
@@ -223,7 +223,7 @@ namespace ARTech.Server.Migrations
 
                     b.HasKey("PaymentId");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("OrderSummaryId");
 
                     b.ToTable("Payments");
                 });
@@ -531,7 +531,24 @@ namespace ARTech.Server.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("ARTech.Shared.Domain.Order", b =>
+            modelBuilder.Entity("ARTech.Shared.Domain.OrderItem", b =>
+                {
+                    b.HasOne("ARTech.Shared.Domain.OrderSummary", "OrderSummary")
+                        .WithMany()
+                        .HasForeignKey("OrderSummaryId");
+
+                    b.HasOne("ARTech.Shared.Domain.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OrderSummary");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("ARTech.Shared.Domain.OrderSummary", b =>
                 {
                     b.HasOne("ARTech.Shared.Domain.Customer", "Customer")
                         .WithMany()
@@ -558,32 +575,15 @@ namespace ARTech.Server.Migrations
                     b.Navigation("Staff");
                 });
 
-            modelBuilder.Entity("ARTech.Shared.Domain.OrderItem", b =>
-                {
-                    b.HasOne("ARTech.Shared.Domain.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
-
-                    b.HasOne("ARTech.Shared.Domain.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("ARTech.Shared.Domain.Payment", b =>
                 {
-                    b.HasOne("ARTech.Shared.Domain.Order", "Order")
+                    b.HasOne("ARTech.Shared.Domain.OrderSummary", "OrderSummary")
                         .WithMany()
-                        .HasForeignKey("OrderId")
+                        .HasForeignKey("OrderSummaryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Order");
+                    b.Navigation("OrderSummary");
                 });
 
             modelBuilder.Entity("ARTech.Shared.Domain.Product", b =>
