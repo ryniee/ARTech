@@ -8,62 +8,6 @@
 <hr />
 <br />
 
-<!--<EditForm Model="@product" OnValidSubmit="CreateProduct">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-    <div class=" form-group">
-        <label>Price: </label>
-        <div>
-            <InputNumber @bind-Value="@product.Price" class="form-control" />
-            <ValidationMessage For="@(() => product.Price)" />
-        </div>
-    </div>
-
-    <div class=" form-group">
-        <label>Warranty: </label>
-        <div>
-            <InputNumber @bind-Value="@product.Warranty" class="form-control" />
-            <ValidationMessage For="@(() => product.Warranty)" />
-        </div>
-    </div>
-    <div class=" form-group">
-        <label>Quantity: </label>
-        <div>
-            <InputNumber @bind-Value="@product.Qty" class="form-control" />
-            <ValidationMessage For="@(() => product.Qty)" />
-        </div>
-    </div>
-    <div class=" form-group">
-        <label>Specs: </label>
-        <div>
-            <InputText @bind-Value="@product.Specs" class="form-control" />
-            <ValidationMessage For="@(() => product.Specs)" />
-        </div>
-    </div>
-    <div class=" form-group">
-        <label>Model: </label>
-        <div>
-            <InputText @bind-Value="@product.Model" class="form-control" />
-            <ValidationMessage For="@(() => product.Model)" />
-        </div>
-    </div>
-    <div class=" form-group">
-        <label>Brand: </label>
-        <div>
-            <InputText @bind-Value="@product.Brand" class="form-control" />
-            <ValidationMessage For="@(() => product.Model)" />
-        </div>
-    </div>
-    <div class=" form-group">
-        <label>Condition: </label>
-        <div>
-            <InputText @bind-Value="@product.Condition" class="form-control" />
-            <ValidationMessage For="@(() => product.Condition)" />
-        </div>
-    </div>
-
-</EditForm>-->
-
 <FormComponent ButtonText="Create Product" product="product" OnValidSubmit="@CreateProduct" />
 
 @code {

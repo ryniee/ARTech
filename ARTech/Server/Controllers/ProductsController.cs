@@ -26,7 +26,7 @@ namespace ARTech.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetProducts()
         {
-            var products = await _unitOfWork.Products.GetAll();
+            var products = await _unitOfWork.Products.GetAll(includes: q => q.Include(x => x.Customer));
             return Ok(products);
         }
 
