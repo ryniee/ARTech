@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ARTech.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220208012902_newdb")]
+    [Migration("20220208015625_newdb")]
     partial class newdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

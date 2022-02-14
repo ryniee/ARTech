@@ -62,16 +62,7 @@ namespace ARTech.Server.Repository
                 .Where(q => q.State == EntityState.Modified ||
                     q.State == EntityState.Added);
 
-            foreach (var entry in entries)
-            {
-                ((OrderSummary)entry.Entity).DateTime = DateTime.Now;
-                //((OrderSummary)entry.Entity).UpdatedBy = user;
-                if (entry.State == EntityState.Added)
-                {
-                    ((OrderSummary)entry.Entity).DateTime = DateTime.Now;
-                    //((BaseDomainModel)entry.Entity).CreatedBy = user;
-                }
-            }
+            
 
             await _context.SaveChangesAsync();
         }
